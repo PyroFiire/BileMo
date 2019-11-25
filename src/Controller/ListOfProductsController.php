@@ -12,6 +12,7 @@ class ListOfProductsController
 {
     private $serializer;
     private $productRepository;
+    private const NB_PRODUCTS_PAGED = 4;
 
     public function __construct(
         SerializerInterface $serializer,
@@ -27,31 +28,22 @@ class ListOfProductsController
     */
     public function listOfproducts(Request $request)
     {
-        $products = $this->productRepository->findAll();
+        $page = $request->query->get('page');
+        $nbProducts = $this->productRepository->count([]);
+        $maxPages = intval($nbProducts / self::NB_PRODUCTS_PAGED);
 
-        $serialiseProduct = $this->serializer->serialize($products, 'json');
-        return new JsonResponse($serialiseProduct, $status = 200, $headers = [], true);
-    }
-
-    /**
-     * @Route("/products/page-{page}", methods={"GET"})
-    */
-    public function listOfproductsPaged($page, Request $request)
-    {
-        $limit = 4;
-        
-        if($page < 1){
-            return new JsonResponse('Error : page not found, Page can\'t be negative or equal to 0.', $status = 404, $headers = [], false);
+        if($page === null){
+            $products = $this->productRepository->findAll();
+            $serialiseProduct = $this->serializer->serialize($products, 'json');
+            return new JsonResponse($serialiseProduct, $status = 200, $headers = [], true);
         }
 
-        $numberProducts = $this->productRepository->count([]);
-        $maxPages = intval($numberProducts / $limit);
-        if($page > $maxPages){
-            return new JsonResponse('Error : page not found, Page can\'t be superior to '.$maxPages.'.', $status = 404, $headers = [], false);
+        if(1 > $page || $page > $maxPages){
+            return new JsonResponse('Error : page not found, the page must be between 1 and '.$maxPages.'.', $status = 404, $headers = [], false);
         }
 
-        $offset = $page * $limit;
-        $products = $this->productRepository->findBy([], [], $limit, $offset);
+        $offset = $page * self::NB_PRODUCTS_PAGED;
+        $products = $this->productRepository->findBy([], [], self::NB_PRODUCTS_PAGED, $offset);
 
         $serialiseProduct = $this->serializer->serialize($products, 'json');
         return new JsonResponse($serialiseProduct, $status = 200, $headers = [], true);
