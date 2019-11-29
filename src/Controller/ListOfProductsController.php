@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Paging\ProductsPaging;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,15 +13,16 @@ class ListOfProductsController
 {
     private $serializer;
     private $productRepository;
-    private const NB_PRODUCTS_PAGED = 4;
 
     public function __construct(
         SerializerInterface $serializer,
-        ProductRepository $productRepository
+        ProductRepository $productRepository,
+        ProductsPaging $paging
     )
     {
         $this->serializer = $serializer;
         $this->productRepository = $productRepository;
+        $this->paging = $paging;
     }
 
     /**
@@ -28,23 +30,7 @@ class ListOfProductsController
     */
     public function listOfproducts(Request $request)
     {
-        $page = $request->query->get('page');
-        $nbProducts = $this->productRepository->count([]);
-        $maxPages = intval($nbProducts / self::NB_PRODUCTS_PAGED);
-
-        if($page === null){
-            $products = $this->productRepository->findAll();
-            $serialiseProduct = $this->serializer->serialize($products, 'json');
-            return new JsonResponse($serialiseProduct, $status = 200, $headers = [], true);
-        }
-
-        if(1 > $page || $page > $maxPages){
-            return new JsonResponse('Error : page not found, the page must be between 1 and '.$maxPages.'.', $status = 404, $headers = [], false);
-        }
-
-        $offset = $page * self::NB_PRODUCTS_PAGED;
-        $products = $this->productRepository->findBy([], [], self::NB_PRODUCTS_PAGED, $offset);
-
+        $products = $this->paging->getDatas($request->query->get('page'));
         $serialiseProduct = $this->serializer->serialize($products, 'json');
         return new JsonResponse($serialiseProduct, $status = 200, $headers = [], true);
     }
