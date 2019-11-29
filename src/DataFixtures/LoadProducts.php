@@ -2,11 +2,14 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\User;
 use App\Entity\Product;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 
-class LoadProducts extends Fixture
+
+class LoadProducts extends Fixture implements FixtureGroupInterface
 {
     public static function getGroups(): array
     {
@@ -15,6 +18,14 @@ class LoadProducts extends Fixture
     
     public function load(ObjectManager $manager)
     {
+        //create Users
+        $user = new User;
+        $user->setUsername('admin')
+             ->setPassword($this->passwordEncoder->encodePassword($user, 'password'))
+        ;
+        $manager->persist($user);
+
+        //create Products
         $product = new Product;
         $product->setBrand('Apple')
                 ->setModel('iPhone 6S')

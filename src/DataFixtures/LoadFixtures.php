@@ -4,11 +4,21 @@ namespace App\DataFixtures;
 
 use Faker\Factory;
 use App\Entity\Product;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class LoadFixtures extends Fixture
+class LoadFixtures extends Fixture implements FixtureGroupInterface
 {
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
     public static function getGroups(): array
     {
         return ['test'];
@@ -17,6 +27,13 @@ class LoadFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create();
+
+        //create Users
+        $user = new User;
+        $user->setUsername('admin')
+             ->setPassword($this->passwordEncoder->encodePassword($user, 'password'))
+        ;
+        $manager->persist($user);
 
         $brands = ['Apple','Samsung','Huawei','Sony','Google'];
         $colors = ['Azure', 'Black', 'Cyan', 'Gold', 'Lime', 'Orchid', 'Ruby', 'Silver', 'White'];
