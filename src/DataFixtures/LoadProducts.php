@@ -7,15 +7,22 @@ use App\Entity\Product;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
-
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class LoadProducts extends Fixture implements FixtureGroupInterface
 {
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+    
     public static function getGroups(): array
     {
         return ['products'];
     }
-    
+
     public function load(ObjectManager $manager)
     {
         //create Users
