@@ -4,6 +4,7 @@ namespace App\Paging;
 
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProductsPaging
 {
@@ -29,8 +30,7 @@ class ProductsPaging
         }
 
         if(1 > $page || $page > $this->maxPages){
-            //exeption
-            return new JsonResponse('Error : page not found, the page must be between 1 and '.$this->maxPages.'.', $status = 404, $headers = [], false);
+            throw new \Exception('The page must be between 1 and '.$this->maxPages.'.', 404);
         }
 
         $offset = $page * self::NB_PRODUCTS_PAGED;
