@@ -4,8 +4,6 @@ namespace App\Paging;
 
 use App\Exceptions\ApiException;
 use App\Repository\ProductRepository;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProductsPaging
 {
