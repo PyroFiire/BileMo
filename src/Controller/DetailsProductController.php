@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Exceptions\ApiException;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,6 +31,9 @@ class DetailsProductController extends AbstractController
     public function detailsProduct($id, Request $request)
     {
         $product = $this->productRepository->findOneById($id);
+        if(null == $product){
+            throw new ApiException('This product not exist.', 404);
+        }
         
         $serialiseProduct = $this->serializer->serialize($product, 'json');
         //$serialiseProduct = $this->serializer->deserialize($serialiseProduct, Product::class, 'json');
