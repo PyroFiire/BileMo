@@ -20,14 +20,21 @@ class ExceptionListener
     
     public function onKernelException(ExceptionEvent $event)
     {
+        
         $exception = $event->getException();
 
-        $response = ['code' => $exception->getCode(),
+        if(get_class($exception) === 'Exception'){
+            $code = $exception->getCode();
+        } else {
+            $code = $exception->getStatusCode();
+        }
+
+        $response = ['code' => $code,
                      'message' => $exception->getMessage(),
         ];
         
         $serialiseResponse = $this->serializer->serialize($response, 'json');
-        $jsonResponse = new JsonResponse($serialiseResponse, $exception->getCode(), $headers = [], true);
+        $jsonResponse = new JsonResponse($serialiseResponse, $code, $headers = [], true);
         $event->setResponse($jsonResponse);
     }
 }
