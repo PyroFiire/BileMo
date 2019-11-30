@@ -2,9 +2,8 @@
 
 namespace App\Paging;
 
+use App\Exceptions\ApiException;
 use App\Repository\ProductRepository;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProductsPaging
 {
@@ -30,7 +29,7 @@ class ProductsPaging
         }
 
         if(1 > $page || $page > $this->maxPages){
-            throw new \Exception('The page must be between 1 and '.$this->maxPages.'.', 404);
+            throw new ApiException('The page must be between 1 and '.$this->maxPages.'.', 404);
         }
 
         $offset = $page * self::NB_PRODUCTS_PAGED;

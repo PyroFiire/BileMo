@@ -23,18 +23,16 @@ class ExceptionListener
         
         $exception = $event->getException();
 
-        if(get_class($exception) === 'Exception'){
-            $code = $exception->getCode();
-        } else {
-            $code = $exception->getStatusCode();
+        
+        if(get_class($exception) !== 'App\Exceptions\ApiException'){
+            return $exception;
         }
 
-        $response = ['code' => $code,
+        $response = ['code' => $exception->getCode(),
                      'message' => $exception->getMessage(),
         ];
-        
         $serialiseResponse = $this->serializer->serialize($response, 'json');
-        $jsonResponse = new JsonResponse($serialiseResponse, $code, $headers = [], true);
+        $jsonResponse = new JsonResponse($serialiseResponse, $exception->getCode(), $headers = [], true);
         $event->setResponse($jsonResponse);
     }
 }
