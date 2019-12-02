@@ -3,8 +3,9 @@
 namespace App\DataFixtures;
 
 use Faker\Factory;
-use App\Entity\Product;
 use App\Entity\User;
+use App\Entity\Person;
+use App\Entity\Product;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
@@ -29,12 +30,29 @@ class LoadFixtures extends Fixture implements FixtureGroupInterface
         $faker = Factory::create();
 
         //create Users
-        $user = new User;
-        $user->setUsername('admin')
-             ->setPassword($this->passwordEncoder->encodePassword($user, 'password'))
-        ;
-        $manager->persist($user);
+        $operator = [ 1=>'sfr', 2=>'orange'];
 
+        for($i = 1; $i <= 2; $i++){
+            $user = new User;
+            $user->setUsername($operator[$i])
+                 ->setPassword($this->passwordEncoder->encodePassword($user, 'password'))
+            ;
+            $manager->persist($user);
+            $users[] = $user;
+        }
+
+        //create People
+        for($i = 1; $i <= 10; $i++){
+            $person = new Person;
+            $person->setEmail($faker->email())
+                ->setFirstname($faker->firstName())
+                ->setLastname($faker->lastName())
+                ->setUserClient($faker->randomElement($users))
+            ;
+            $manager->persist($person);
+        }
+
+        //create Products
         $brands = ['Apple','Samsung','Huawei','Sony','Google'];
         $colors = ['Azure', 'Black', 'Cyan', 'Gold', 'Lime', 'Orchid', 'Ruby', 'Silver', 'White'];
         $storageGB = [8, 16, 32, 64];
