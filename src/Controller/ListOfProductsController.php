@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Paging\ProductsPaging;
-use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,15 +12,12 @@ class ListOfProductsController
 {
     private $serializer;
     private $productRepository;
-
     public function __construct(
         SerializerInterface $serializer,
-        ProductRepository $productRepository,
         ProductsPaging $paging
     )
     {
         $this->serializer = $serializer;
-        $this->productRepository = $productRepository;
         $this->paging = $paging;
     }
 
