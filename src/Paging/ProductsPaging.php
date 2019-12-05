@@ -19,7 +19,7 @@ class ProductsPaging
     {
         $this->productRepository = $productRepository;
         $this->nbProducts = $this->productRepository->count([]);
-        $this->maxPages = intval($this->nbProducts / self::NB_PRODUCTS_PAGED);
+        $this->maxPages = intval(ceil($this->nbProducts / self::NB_PRODUCTS_PAGED));
     }
 
     public function getDatas($page){
@@ -32,7 +32,7 @@ class ProductsPaging
             throw new ApiException('The page must be between 1 and '.$this->maxPages.'.', 404);
         }
 
-        $offset = $page * self::NB_PRODUCTS_PAGED;
+        $offset = self::NB_PRODUCTS_PAGED*($page -1);
         return $products = $this->productRepository->findBy([], [], self::NB_PRODUCTS_PAGED, $offset);        
     }
     
