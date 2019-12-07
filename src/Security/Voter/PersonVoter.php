@@ -2,6 +2,7 @@
 
 namespace App\Security\Voter;
 
+use App\Entity\User;
 use App\Entity\Person;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -13,7 +14,7 @@ class PersonVoter extends Voter
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, ['view', 'edit'])
+        return in_array($attribute, ['view', 'delete'])
             && $subject instanceof Person;
     }
 
@@ -30,17 +31,24 @@ class PersonVoter extends Voter
         switch ($attribute) {
             case 'view':
                 // logic to determine if the user can VIEW
-                if($user->getId() === $subject->getUserClient()->getId() ){
-                    return true;
-                }
+                return $this->canView($subject, $user);
                 break;
-            case 'edit':
-                // logic to determine if the user can EDIT
-                // return true or false
-                return true;
+            case 'delete':
+                return $this->canDelete($subject, $user);
                 break;
         }
-
         return false;
+    }
+
+    private function canView(Person $subject, User $user)
+    {
+        return $user->getId() === $subject->getUserClient()->getId();
+    }
+
+    private function canDelete(Person $subject, User $user)
+    {
+        if ($this->canView($subject, $user)) {
+            return true;
+        }
     }
 }
