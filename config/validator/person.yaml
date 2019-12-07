@@ -1,0 +1,19 @@
+App\Entity\Person:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
+    properties:
+        firstname:
+            - NotBlank: ~
+            - Length:
+                min: 1
+                max: 30
+        lastname:
+            - NotBlank: ~
+            - Length:
+                min: 1
+                max: 30
+        email:
+            - NotBlank: ~
+            - Email: ~
+            - Length:
+                max: 50
