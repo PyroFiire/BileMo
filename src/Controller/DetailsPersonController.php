@@ -49,6 +49,8 @@ class DetailsPersonController
 
         $personDTO = new PersonDTO($person);
         $serialisePerson = $this->serializer->serialize($personDTO, 'json');
-        return new JsonResponse($serialisePerson, $status = 200, $headers = [], true);
+        $response = new JsonResponse($serialisePerson, $status = 200, $headers = [], true);
+        $response->setSharedMaxAge(3600);
+        return $response;
     }
 }
