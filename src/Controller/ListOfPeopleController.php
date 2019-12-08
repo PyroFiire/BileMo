@@ -43,6 +43,8 @@ class ListOfPeopleController extends AbstractController
         $peopleDTO = $this->personDTO->getPeopleDTO($people);
         
         $serialisePeople = $this->serializer->serialize($peopleDTO, 'json');
-        return new JsonResponse($serialisePeople, $status = 200, $headers = [], true);
+        $response = new JsonResponse($serialisePeople, $status = 200, $headers = [], true);
+        $response->setSharedMaxAge(3600);
+        return $response;
     }
 }

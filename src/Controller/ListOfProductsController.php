@@ -28,6 +28,8 @@ class ListOfProductsController
     {
         $products = $this->paging->getDatas($request->query->get('page'));
         $serialiseProduct = $this->serializer->serialize($products, 'json');
-        return new JsonResponse($serialiseProduct, $status = 200, $headers = [], true);
+        $response = new JsonResponse($serialiseProduct, $status = 200, $headers = [], true);
+        $response->setSharedMaxAge(3600);
+        return $response;
     }
 }
