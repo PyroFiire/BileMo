@@ -2,28 +2,24 @@
 
 namespace App\Controller;
 
-use App\Entity\Product;
 use App\Exceptions\ApiException;
+use App\Responder\JsonResponder;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class DetailsProductController extends AbstractController
+class DetailsProductController
 {
-    private $serializer;
     private $productRepository;
+    private $responder;
 
     public function __construct(
-        SerializerInterface $serializer,
-        ProductRepository $productRepository
+        ProductRepository $productRepository,
+        JsonResponder $responder
     )
     {
-        $this->serializer = $serializer;
         $this->productRepository = $productRepository;
+        $this->responder = $responder;
     }
 
     /**
@@ -36,10 +32,6 @@ class DetailsProductController extends AbstractController
             throw new ApiException('This product not exist.', 404);
         }
 
-        $serialiseProduct = $this->serializer->serialize($product, 'json');
-
-        $response = new JsonResponse($serialiseProduct, $status = 200, $headers = [], true);
-        $response->setSharedMaxAge(3600);
-        return $response;
+        return $this->responder->send($request, $product);
     }
 }

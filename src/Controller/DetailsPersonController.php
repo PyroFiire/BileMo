@@ -4,31 +4,31 @@ namespace App\Controller;
 
 use App\DTO\PersonDTO;
 use App\Exceptions\ApiException;
+use App\Responder\JsonResponder;
 use App\Security\Voter\PersonVoter;
 use App\Repository\PersonRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class DetailsPersonController
 {
-    private $serializer;
     private $personRepository;
     private $personVoter;
+    private $security;
+    private $responder;
 
     public function __construct(
-        SerializerInterface $serializer,
         PersonRepository $personRepository,
         PersonVoter $personVoter,
-        Security $security
+        Security $security, 
+        JsonResponder $responder
     )
     {
-        $this->serializer = $serializer;
         $this->personRepository = $personRepository;
         $this->personVoter = $personVoter;
         $this->security = $security;
+        $this->responder = $responder;
     }
 
     /**
@@ -37,7 +37,6 @@ class DetailsPersonController
     public function detailsPerson($id, Request $request)
     {
         $person = $this->personRepository->findOneById($id);
-
         if(null == $person){
             throw new ApiException('This person not exist.', 404);
         }
@@ -48,9 +47,7 @@ class DetailsPersonController
         }
 
         $personDTO = new PersonDTO($person);
-        $serialisePerson = $this->serializer->serialize($personDTO, 'json');
-        $response = new JsonResponse($serialisePerson, $status = 200, $headers = [], true);
-        $response->setSharedMaxAge(3600);
-        return $response;
+        
+        return $this->responder->send($request, $personDTO);
     }
 }

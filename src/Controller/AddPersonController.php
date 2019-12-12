@@ -3,12 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Person;
+use App\Responder\JsonResponder;
 use App\Security\ErrorsValidator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -19,13 +19,15 @@ class AddPersonController
     private $security;
     private $validator;
     private $errorsValidator;
+    private $responder;
 
     public function __construct(
         SerializerInterface $serializer,
         ObjectManager $manager,
         Security $security,
         ValidatorInterface $validator,
-        ErrorsValidator $errorsValidator
+        ErrorsValidator $errorsValidator,
+        JsonResponder $responder
     )
     {
         $this->serializer = $serializer;
@@ -33,6 +35,7 @@ class AddPersonController
         $this->security = $security;
         $this->validator = $validator;
         $this->errorsValidator = $errorsValidator;
+        $this->responder = $responder;
     }
     /**
      * @Route("/addPerson", methods={"POST"})
@@ -44,12 +47,13 @@ class AddPersonController
 
         $errors = $this->validator->validate($person);
         if (count($errors) > 0) {
-            return new JsonResponse($this->errorsValidator->display($errors), $status = 409, $headers = [], true);
+            return $this->responder->send($request, $this->errorsValidator->arrayFormatted($errors), 409);
         }
 
         $this->manager->persist($person);
         $this->manager->flush();
-        return new JsonResponse('{"code" : 201}', $status = 201, $headers = [], true);
+
+        return $this->responder->send($request, $datas = ["code" => 201], 201);
 
     }
 }

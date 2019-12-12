@@ -4,26 +4,23 @@ namespace App\Controller;
 
 use App\DTO\PersonDTO;
 use App\Paging\PeoplePaging;
-use App\Security\Voter\PersonVoter;
+use App\Responder\JsonResponder;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class ListOfPeopleController extends AbstractController
+class ListOfPeopleController
 {
-    private $serializer;
+    private $responder;
     private $personRepository;
+    private $personDTO;
 
     public function __construct(
-        SerializerInterface $serializer,
+        JsonResponder $responder,
         PeoplePaging $paging,
         PersonDTO $personDTO
     )
     {
-        $this->serializer = $serializer;
+        $this->responder = $responder;
         $this->paging = $paging;
         $this->personDTO = $personDTO;
     }
@@ -31,20 +28,13 @@ class ListOfPeopleController extends AbstractController
     /**
      * @Route("/people", methods={"GET"})
     */
-    public function listOfpeople(Request $request, Security $security, PersonVoter $voter)
+    public function listOfpeople(Request $request)
     {
-        // get a Post object - e.g. query for it
         $people = $this->paging->getDatas($request->query->get('page'));
-        // check for "view" access: calls all voters
-        //$this->denyAccessUnlessGranted('view', $people[0]);
-        //isGranted($attribute, $object, $user = null)
-        // ...
 
         $peopleDTO = $this->personDTO->getPeopleDTO($people);
         
-        $serialisePeople = $this->serializer->serialize($peopleDTO, 'json');
-        $response = new JsonResponse($serialisePeople, $status = 200, $headers = [], true);
-        $response->setSharedMaxAge(3600);
-        return $response;
+        return $this->responder->send($request, $peopleDTO);
+
     }
 }
