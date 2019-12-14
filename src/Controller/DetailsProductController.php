@@ -23,7 +23,7 @@ class DetailsProductController
     }
 
     /**
-     * @Route("/detailsProduct/{id}", methods={"GET"})
+     * @Route("/detailsProduct/{id}", methods={"GET"}, name="detailsProduct")
     */
     public function detailsProduct($id, Request $request)
     {

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\DTO\PersonDTO;
 use App\Entity\Person;
 use App\Responder\JsonResponder;
 use App\Security\ErrorsValidator;
@@ -38,7 +39,7 @@ class AddPersonController
         $this->responder = $responder;
     }
     /**
-     * @Route("/addPerson", methods={"POST"})
+     * @Route("/addPerson", methods={"POST"}, name="addPerson")
      */
     public function addPerson(Request $request)
     {
@@ -53,7 +54,8 @@ class AddPersonController
         $this->manager->persist($person);
         $this->manager->flush();
 
-        return $this->responder->send($request, $datas = ["code" => 201], 201);
+        $personDTO = new PersonDTO($person);
+        return $this->responder->send($request, $personDTO, 201);
 
     }
 }

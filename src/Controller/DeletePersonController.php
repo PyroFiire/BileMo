@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DeletePersonController
 {
@@ -35,7 +34,7 @@ class DeletePersonController
         $this->responder = $responder;
     }
     /**
-     * @Route("/deletePerson/{id}", methods={"DELETE"})
+     * @Route("/deletePerson/{id}", methods={"DELETE"}, name="deletePerson")
      */
     public function deletePerson($id, Request $request)
     {

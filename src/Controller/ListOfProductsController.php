@@ -22,7 +22,7 @@ class ListOfProductsController
     }
 
     /**
-     * @Route("/products", methods={"GET"})
+     * @Route("/products", methods={"GET"}, name="listOfProducts")
     */
     public function listOfproducts(Request $request)
     {
