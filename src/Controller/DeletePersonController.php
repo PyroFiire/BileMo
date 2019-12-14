@@ -51,7 +51,7 @@ class DeletePersonController
 
         $this->manager->remove($person);
         $this->manager->flush();
-        return $this->responder->send($request, $datas = ["code" => 200]);
+        return $this->responder->send($request, $datas = [], 204);
 
     }
 }
