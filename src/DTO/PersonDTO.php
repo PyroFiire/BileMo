@@ -14,6 +14,7 @@ class PersonDTO
     private $email;
     private $firstname;
     private $lastname;
+    private $_links;
 
     public function __construct(
         Person $person
@@ -23,6 +24,7 @@ class PersonDTO
         $this->email = $person->getEmail();
         $this->firstname = $person->getFirstname();
         $this->lastname = $person->getLastname();
+        $this->_links = $person->get_links();
     }
 
     public function getPeopleDTO(Array $people)
@@ -53,4 +55,17 @@ class PersonDTO
     {
         return $this->lastname;
     }
+
+    public function get_Links(): ?Array
+    {
+        return $this->_links;
+    }
+    
+    public function set_Links(Array $links): self
+    {
+        $this->_links = $links;
+
+        return $this;
+    }
+
 }
