@@ -61,6 +61,8 @@ class Product
      */
     private $price;
 
+    private $_links;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -170,6 +172,18 @@ class Product
     public function setPrice(float $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function get_Links(): ?Array
+    {
+        return $this->_links;
+    }
+
+    public function set_Links(Array $links): self
+    {
+        $this->_links = $links;
 
         return $this;
     }

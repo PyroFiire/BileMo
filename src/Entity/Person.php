@@ -36,6 +36,8 @@ class Person
      */
     private $userClient;
 
+    private $_links;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +87,18 @@ class Person
     public function setUserClient(?User $userClient): self
     {
         $this->userClient = $userClient;
+
+        return $this;
+    }
+
+    public function get_Links(): ?Array
+    {
+        return $this->_links;
+    }
+
+    public function set_Links(Array $links): self
+    {
+        $this->_links = $links;
 
         return $this;
     }

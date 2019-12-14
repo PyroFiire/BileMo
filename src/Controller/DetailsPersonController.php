@@ -32,7 +32,7 @@ class DetailsPersonController
     }
 
     /**
-     * @Route("/detailsPerson/{id}", methods={"GET"})
+     * @Route("/detailsPerson/{id}", methods={"GET"}, name="detailsPerson")
      */
     public function detailsPerson($id, Request $request)
     {

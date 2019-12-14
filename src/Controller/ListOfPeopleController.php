@@ -26,7 +26,7 @@ class ListOfPeopleController
     }
 
     /**
-     * @Route("/people", methods={"GET"})
+     * @Route("/people", methods={"GET"}, name="listOfPeople")
     */
     public function listOfpeople(Request $request)
     {
