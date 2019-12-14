@@ -6,13 +6,18 @@ use Symfony\Component\Validator\ConstraintViolationList;
 
 class ErrorsValidator
 {
+    private $errors;
 
     public function arrayFormatted(ConstraintViolationList $errors)
     {
-        $response['code'] = 409 ;
-        foreach ($errors as $error) {
-            $response[$error->getPropertyPath()] = $error->getMessage();
+        foreach ($errors as $error) {            
+            $this->errors[$error->getPropertyPath()] = $error->getMessage();
         }
-        return $response;
+        return $this;
+    }
+
+    public function getErrors(): ?Array
+    {
+        return $this->errors;
     }
 }
