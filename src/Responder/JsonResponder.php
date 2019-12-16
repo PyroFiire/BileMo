@@ -23,9 +23,6 @@ class JsonResponder
         $this->links = $links;
     }
 
-    /**
-     * @Route("/detailsPerson/{id}", methods={"GET"})
-     */
     public function send(Request $request, $datas, Int $status = 200, Array $headers = [])
     {
         if(!is_array($datas) && !is_object($datas)) {
