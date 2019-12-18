@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class LoginController
 {
     /**
-     * @Route("/login", name="login")
+     * @Route("/login", methods={"POST"}, name="login")
      */
     public function index()
     {
