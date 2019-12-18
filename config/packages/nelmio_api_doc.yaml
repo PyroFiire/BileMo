@@ -1,0 +1,19 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: BileMO API
+            description: Projet n°
+            version: 1.1
+        securityDefinitions:
+            Bearer:
+                type: apiKey
+                name: authorization
+                in: header
+                description: 'Value: Bearer {jwt}'
+        security:
+            Bearer: []
+    areas: # to filter documented areas
+        path_patterns:
+            - ([^/doc$])([^/$]) # addition of the fields below
+            # ([^/doc$])        ### not /doc
+            # ([^/$])           ### not /
