@@ -10,6 +10,8 @@ use App\Repository\PersonRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Routing\Annotation\Route;
+use Nelmio\ApiDocBundle\Annotation\Security as SecurityDoc;
+use Swagger\Annotations as SWG;
 
 class DetailsPersonController
 {
@@ -33,6 +35,27 @@ class DetailsPersonController
 
     /**
      * @Route("/detailsPerson/{id}", methods={"GET"}, name="detailsPerson")
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns one product",
+     *
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Error : This person not exist.",  
+     * )
+     * @SWG\Response(
+     *     response=403,
+     *     description="Error : You are not authorized to access this resource..",  
+     * )
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="path",
+     *     type="integer",
+     *     description="The id of the person"
+     * )
+     * @SWG\Tag(name="People")
+     * @SecurityDoc(name="Bearer")
      */
     public function detailsPerson($id, Request $request)
     {
