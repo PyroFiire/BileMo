@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
+use Nelmio\ApiDocBundle\Annotation\Security as SecurityDoc;
+use Swagger\Annotations as SWG;
 
 class DeletePersonController
 {
@@ -35,6 +37,27 @@ class DeletePersonController
     }
     /**
      * @Route("/deletePerson/{id}", methods={"DELETE"}, name="deletePerson")
+     * @SWG\Response(
+     *     response=204,
+     *     description="Return empty body",
+     *
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Error : This person not exist.",  
+     * )
+     * @SWG\Response(
+     *     response=403,
+     *     description="Error : You are not authorized to access this resource..",  
+     * )
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="path",
+     *     type="integer",
+     *     description="The id of the person"
+     * )
+     * @SWG\Tag(name="People")
+     * @SecurityDoc(name="Bearer")
      */
     public function deletePerson($id, Request $request)
     {

@@ -12,6 +12,13 @@ security:
                 property: username
 
     firewalls:
+        homepage:
+            pattern: ^/$
+            security: false
+        doc:
+            pattern: ^/doc
+            security: false
+
         login:
             pattern:  ^/login
             stateless: true

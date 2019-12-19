@@ -6,6 +6,8 @@ use App\Paging\ProductsPaging;
 use App\Responder\JsonResponder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Nelmio\ApiDocBundle\Annotation\Security as SecurityDoc;
+use Swagger\Annotations as SWG;
 
 class ListOfProductsController
 {
@@ -23,6 +25,23 @@ class ListOfProductsController
 
     /**
      * @Route("/products", methods={"GET"}, name="listOfProducts")
+     * 
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns all products",
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Error : The page must be between X and X." 
+     * )
+     * @SWG\Parameter(
+     *     name="page",
+     *     in="query",
+     *     type="integer",
+     *     description="Product pagination"
+     * )
+     * @SWG\Tag(name="Products")
+     * @SecurityDoc(name="Bearer")
     */
     public function listOfproducts(Request $request)
     {

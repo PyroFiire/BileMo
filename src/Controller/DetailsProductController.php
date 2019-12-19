@@ -7,6 +7,8 @@ use App\Responder\JsonResponder;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Nelmio\ApiDocBundle\Annotation\Security as SecurityDoc;
+use Swagger\Annotations as SWG;
 
 class DetailsProductController
 {
@@ -24,7 +26,26 @@ class DetailsProductController
 
     /**
      * @Route("/detailsProduct/{id}", methods={"GET"}, name="detailsProduct")
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns one product",
+     *
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Error : This product not exist.",  
+     * )
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="path",
+     *     type="integer",
+     *     description="The id of the product"
+     * )
+     * @SWG\Tag(name="Products")
+     * @SecurityDoc(name="Bearer")
     */
+
     public function detailsProduct($id, Request $request)
     {
         $product = $this->productRepository->findOneById($id);

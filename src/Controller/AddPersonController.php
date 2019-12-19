@@ -12,6 +12,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Nelmio\ApiDocBundle\Annotation\Security as SecurityDoc;
+use Swagger\Annotations as SWG;
 
 class AddPersonController
 {
@@ -40,6 +42,26 @@ class AddPersonController
     }
     /**
      * @Route("/addPerson", methods={"POST"}, name="addPerson")
+     * * @SWG\Response(
+     *     response=201,
+     *     description="Returns the created person",
+     * )
+     * @SWG\Response(
+     *     response=409,
+     *     description="Invalid : Return all fields with an error",  
+     * )
+     * @SWG\Parameter(
+     *     name="Person",
+     *     in="body",
+     *     description="The person you want add",
+     *     @SWG\Schema(
+     *         @SWG\Property(property="email", type="string", example="exemple@exemple.com"),
+     *         @SWG\Property(property="firstname", type="string", example="John"),
+     *         @SWG\Property(property="lastname", type="string", example="Smith")
+     *     )
+     * )
+     * @SWG\Tag(name="People")
+     * @SecurityDoc(name="Bearer")
      */
     public function addPerson(Request $request)
     {
