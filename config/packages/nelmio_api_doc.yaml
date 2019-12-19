@@ -2,7 +2,7 @@ nelmio_api_doc:
     documentation:
         info:
             title: BileMO API
-            description: Projet n°
+            description: Projet n°7 du parcours PHP / Symfony chez Openclassrooms
             version: 1.1
         securityDefinitions:
             Bearer:
