@@ -2,18 +2,18 @@
 
 namespace App\Controller;
 
-use Symfony\Component\Routing\Annotation\Route;
 use Swagger\Annotations as SWG;
+use Symfony\Component\Routing\Annotation\Route;
 
 class LoginController
 {
     /**
      * @Route("/login", methods={"POST"}, name="login")
-     * 
+     *
      * @SWG\Response(
      *     response=200,
      *     description="Return Bearer Token",
-     *     
+     *
      * )
      * @SWG\Response(
      *     response=401,
@@ -29,9 +29,8 @@ class LoginController
      *     )
      * )
      * @SWG\Tag(name="Login")
-    */
+     */
     public function index()
     {
-
     }
 }

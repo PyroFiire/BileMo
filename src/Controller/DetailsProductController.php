@@ -3,12 +3,12 @@
 namespace App\Controller;
 
 use App\Exceptions\ApiException;
-use App\Responder\JsonResponder;
 use App\Repository\ProductRepository;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use App\Responder\JsonResponder;
 use Nelmio\ApiDocBundle\Annotation\Security as SecurityDoc;
 use Swagger\Annotations as SWG;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class DetailsProductController
 {
@@ -18,8 +18,7 @@ class DetailsProductController
     public function __construct(
         ProductRepository $productRepository,
         JsonResponder $responder
-    )
-    {
+    ) {
         $this->productRepository = $productRepository;
         $this->responder = $responder;
     }
@@ -34,7 +33,7 @@ class DetailsProductController
      * )
      * @SWG\Response(
      *     response=404,
-     *     description="Error : This product not exist.",  
+     *     description="Error : This product not exist.",
      * )
      * @SWG\Parameter(
      *     name="id",
@@ -44,12 +43,11 @@ class DetailsProductController
      * )
      * @SWG\Tag(name="Products")
      * @SecurityDoc(name="Bearer")
-    */
-
+     */
     public function detailsProduct($id, Request $request)
     {
         $product = $this->productRepository->findOneById($id);
-        if(null == $product){
+        if (null == $product) {
             throw new ApiException('This product not exist.', 404);
         }
 

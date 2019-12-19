@@ -18,8 +18,7 @@ class PersonDTO
 
     public function __construct(
         Person $person
-    )
-    { 
+    ) {
         $this->id = $person->getId();
         $this->email = $person->getEmail();
         $this->firstname = $person->getFirstname();
@@ -27,12 +26,13 @@ class PersonDTO
         $this->_links = $person->get_links();
     }
 
-    public function getPeopleDTO(Array $people)
+    public function getPeopleDTO(array $people)
     {
         foreach ($people as $person) {
             $personDTO = new self($person);
             $peopleDTO[] = $personDTO;
         }
+
         return $peopleDTO;
     }
 
@@ -56,16 +56,15 @@ class PersonDTO
         return $this->lastname;
     }
 
-    public function get_Links(): ?Array
+    public function get_Links(): ?array
     {
         return $this->_links;
     }
-    
-    public function set_Links(Array $links): self
+
+    public function set_Links(array $links): self
     {
         $this->_links = $links;
 
         return $this;
     }
-
 }

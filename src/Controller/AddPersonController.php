@@ -6,14 +6,14 @@ use App\DTO\PersonDTO;
 use App\Entity\Person;
 use App\Responder\JsonResponder;
 use App\Security\ErrorsValidator;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Nelmio\ApiDocBundle\Annotation\Security as SecurityDoc;
 use Swagger\Annotations as SWG;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AddPersonController
 {
@@ -31,8 +31,7 @@ class AddPersonController
         ValidatorInterface $validator,
         ErrorsValidator $errorsValidator,
         JsonResponder $responder
-    )
-    {
+    ) {
         $this->serializer = $serializer;
         $this->manager = $manager;
         $this->security = $security;
@@ -40,6 +39,7 @@ class AddPersonController
         $this->errorsValidator = $errorsValidator;
         $this->responder = $responder;
     }
+
     /**
      * @Route("/addPerson", methods={"POST"}, name="addPerson")
      * * @SWG\Response(
@@ -48,7 +48,7 @@ class AddPersonController
      * )
      * @SWG\Response(
      *     response=409,
-     *     description="Invalid : Return all fields with an error",  
+     *     description="Invalid : Return all fields with an error",
      * )
      * @SWG\Parameter(
      *     name="Person",
@@ -77,7 +77,7 @@ class AddPersonController
         $this->manager->flush();
 
         $personDTO = new PersonDTO($person);
-        return $this->responder->send($request, $personDTO, 201);
 
+        return $this->responder->send($request, $personDTO, 201);
     }
 }

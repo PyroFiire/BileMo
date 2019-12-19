@@ -10,13 +10,14 @@ class ErrorsValidator
 
     public function arrayFormatted(ConstraintViolationList $errors)
     {
-        foreach ($errors as $error) {            
+        foreach ($errors as $error) {
             $this->errors[$error->getPropertyPath()] = $error->getMessage();
         }
+
         return $this;
     }
 
-    public function getErrors(): ?Array
+    public function getErrors(): ?array
     {
         return $this->errors;
     }

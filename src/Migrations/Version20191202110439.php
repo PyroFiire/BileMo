@@ -12,24 +12,24 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20191202110439 extends AbstractMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return '';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('CREATE TABLE person (id INT AUTO_INCREMENT NOT NULL, user_client_id INT DEFAULT NULL, email VARCHAR(255) NOT NULL, firstname VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, INDEX IDX_34DCD176190BE4C5 (user_client_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE person ADD CONSTRAINT FK_34DCD176190BE4C5 FOREIGN KEY (user_client_id) REFERENCES user (id)');
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('DROP TABLE person');
     }

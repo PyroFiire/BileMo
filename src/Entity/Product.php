@@ -176,12 +176,12 @@ class Product
         return $this;
     }
 
-    public function get_Links(): ?Array
+    public function get_Links(): ?array
     {
         return $this->_links;
     }
 
-    public function set_Links(Array $links): self
+    public function set_Links(array $links): self
     {
         $this->_links = $links;
 

@@ -2,11 +2,11 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\User;
 use App\Entity\Product;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class LoadProducts extends Fixture implements FixtureGroupInterface
@@ -17,7 +17,7 @@ class LoadProducts extends Fixture implements FixtureGroupInterface
     {
         $this->passwordEncoder = $passwordEncoder;
     }
-    
+
     public static function getGroups(): array
     {
         return ['products'];
@@ -26,14 +26,14 @@ class LoadProducts extends Fixture implements FixtureGroupInterface
     public function load(ObjectManager $manager)
     {
         //create Users
-        $user = new User;
+        $user = new User();
         $user->setUsername('admin')
              ->setPassword($this->passwordEncoder->encodePassword($user, 'password'))
         ;
         $manager->persist($user);
 
         //create Products
-        $product = new Product;
+        $product = new Product();
         $product->setBrand('Apple')
                 ->setModel('iPhone 6S')
                 ->setReleaseYear(2015)
@@ -46,7 +46,7 @@ class LoadProducts extends Fixture implements FixtureGroupInterface
         ;
         $manager->persist($product);
 
-        $product = new Product;
+        $product = new Product();
         $product->setBrand('Apple')
                 ->setModel('iPhone 6')
                 ->setReleaseYear(2014)
@@ -59,7 +59,7 @@ class LoadProducts extends Fixture implements FixtureGroupInterface
         ;
         $manager->persist($product);
 
-        $product = new Product;
+        $product = new Product();
         $product->setBrand('Apple')
                 ->setModel('iPhone 8')
                 ->setReleaseYear(2017)
@@ -72,7 +72,7 @@ class LoadProducts extends Fixture implements FixtureGroupInterface
         ;
         $manager->persist($product);
 
-        $product = new Product;
+        $product = new Product();
         $product->setBrand('Apple')
                 ->setModel('iPhone X')
                 ->setReleaseYear(2017)
@@ -85,7 +85,7 @@ class LoadProducts extends Fixture implements FixtureGroupInterface
         ;
         $manager->persist($product);
 
-        $product = new Product;
+        $product = new Product();
         $product->setBrand('Apple')
                 ->setModel('iPhone XS Max')
                 ->setReleaseYear(2018)
@@ -98,7 +98,7 @@ class LoadProducts extends Fixture implements FixtureGroupInterface
         ;
         $manager->persist($product);
 
-        $product = new Product;
+        $product = new Product();
         $product->setBrand('Apple')
                 ->setModel('iPhone 11')
                 ->setReleaseYear(2019)
@@ -111,7 +111,7 @@ class LoadProducts extends Fixture implements FixtureGroupInterface
         ;
         $manager->persist($product);
 
-        $product = new Product;
+        $product = new Product();
         $product->setBrand('Samsung')
                 ->setModel('Galaxy S9 Plus')
                 ->setReleaseYear(2018)
@@ -124,7 +124,7 @@ class LoadProducts extends Fixture implements FixtureGroupInterface
         ;
         $manager->persist($product);
 
-        $product = new Product;
+        $product = new Product();
         $product->setBrand('Samsung')
                 ->setModel('Galaxy S8 Plus')
                 ->setReleaseYear(2017)
@@ -137,7 +137,7 @@ class LoadProducts extends Fixture implements FixtureGroupInterface
         ;
         $manager->persist($product);
 
-        $product = new Product;
+        $product = new Product();
         $product->setBrand('Samsung')
                 ->setModel('Galaxy Note 9')
                 ->setReleaseYear(2018)
@@ -150,7 +150,7 @@ class LoadProducts extends Fixture implements FixtureGroupInterface
         ;
         $manager->persist($product);
 
-        $product = new Product;
+        $product = new Product();
         $product->setBrand('Samsung')
                 ->setModel('Galaxy S10')
                 ->setReleaseYear(2019)
@@ -163,7 +163,7 @@ class LoadProducts extends Fixture implements FixtureGroupInterface
         ;
         $manager->persist($product);
 
-        $product = new Product;
+        $product = new Product();
         $product->setBrand('Samsung')
                 ->setModel('Galaxy S8')
                 ->setReleaseYear(2017)
@@ -175,7 +175,7 @@ class LoadProducts extends Fixture implements FixtureGroupInterface
                 ->setPrice(499)
         ;
         $manager->persist($product);
-        
+
         $manager->flush();
     }
 }
