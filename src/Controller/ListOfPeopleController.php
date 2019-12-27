@@ -4,11 +4,12 @@ namespace App\Controller;
 
 use App\DTO\PersonDTO;
 use App\Paging\PeoplePaging;
-use App\Responder\JsonResponder;
-use Nelmio\ApiDocBundle\Annotation\Security as SecurityDoc;
 use Swagger\Annotations as SWG;
+use App\Responder\JsonResponder;
+use App\Links\LinksPersonDTOGenerator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Nelmio\ApiDocBundle\Annotation\Security as SecurityDoc;
 
 class ListOfPeopleController
 {
@@ -19,11 +20,13 @@ class ListOfPeopleController
     public function __construct(
         JsonResponder $responder,
         PeoplePaging $paging,
-        PersonDTO $personDTO
+        PersonDTO $personDTO,
+        LinksPersonDTOGenerator $links
     ) {
         $this->responder = $responder;
         $this->paging = $paging;
         $this->personDTO = $personDTO;
+        $this->links = $links;
     }
 
     /**
@@ -53,6 +56,7 @@ class ListOfPeopleController
 
         $peopleDTO = $this->personDTO->getPeopleDTO($people);
 
+        $this->links->addLinks($peopleDTO);
         return $this->responder->send($request, $peopleDTO);
     }
 }

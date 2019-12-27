@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\Links\LinksPersonDTOGenerator;
 
 class AddPersonController
 {
@@ -23,6 +24,7 @@ class AddPersonController
     private $validator;
     private $errorsValidator;
     private $responder;
+    private $links;
 
     public function __construct(
         SerializerInterface $serializer,
@@ -30,7 +32,8 @@ class AddPersonController
         Security $security,
         ValidatorInterface $validator,
         ErrorsValidator $errorsValidator,
-        JsonResponder $responder
+        JsonResponder $responder,
+        LinksPersonDTOGenerator $links
     ) {
         $this->serializer = $serializer;
         $this->manager = $manager;
@@ -38,6 +41,7 @@ class AddPersonController
         $this->validator = $validator;
         $this->errorsValidator = $errorsValidator;
         $this->responder = $responder;
+        $this->links = $links;
     }
 
     /**
@@ -77,6 +81,7 @@ class AddPersonController
         $this->manager->flush();
 
         $personDTO = new PersonDTO($person);
+        $this->links->addLinks($personDTO);
 
         return $this->responder->send($request, $personDTO, 201);
     }

@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
-use App\Exceptions\ApiException;
-use App\Repository\ProductRepository;
-use App\Responder\JsonResponder;
-use Nelmio\ApiDocBundle\Annotation\Security as SecurityDoc;
 use Swagger\Annotations as SWG;
+use App\Exceptions\ApiException;
+use App\Responder\JsonResponder;
+use App\Links\LinksProductGenerator;
+use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Nelmio\ApiDocBundle\Annotation\Security as SecurityDoc;
 
 class DetailsProductController
 {
@@ -17,10 +18,12 @@ class DetailsProductController
 
     public function __construct(
         ProductRepository $productRepository,
-        JsonResponder $responder
+        JsonResponder $responder,
+        LinksProductGenerator $links
     ) {
         $this->productRepository = $productRepository;
         $this->responder = $responder;
+        $this->links = $links;
     }
 
     /**
@@ -51,6 +54,7 @@ class DetailsProductController
             throw new ApiException('This product not exist.', 404);
         }
 
+        $this->links->addLinks($product);
         return $this->responder->send($request, $product);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Responder;
 
-use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -13,20 +12,13 @@ class JsonResponder
     private $links;
 
     public function __construct(
-        SerializerInterface $serializer,
-        Links $links
+        SerializerInterface $serializer
     ) {
         $this->serializer = $serializer;
-        $this->links = $links;
     }
 
     public function send(Request $request, $datas, int $status = 200, array $headers = [])
     {
-        if (!is_array($datas) && !is_object($datas)) {
-            throw new Exception('$datas is not an Array or an Object');
-        }
-
-        $this->links->addLinks($datas);
         $datasJson = $this->serializer->serialize($datas, 'json');
 
         $response = new JsonResponse($datasJson, $status, $headers, true);
