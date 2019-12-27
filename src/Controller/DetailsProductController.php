@@ -24,7 +24,7 @@ class DetailsProductController
     }
 
     /**
-     * @Route("/detailsProduct/{id}", methods={"GET"}, name="detailsProduct")
+     * @Route("/product/{id}", methods={"GET"}, name="detailsProduct")
      *
      * @SWG\Response(
      *     response=200,

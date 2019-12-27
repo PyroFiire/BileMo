@@ -33,7 +33,7 @@ class DetailsPersonController
     }
 
     /**
-     * @Route("/detailsPerson/{id}", methods={"GET"}, name="detailsPerson")
+     * @Route("/person/{id}", methods={"GET"}, name="detailsPerson")
      * @SWG\Response(
      *     response=200,
      *     description="Returns one product",
