@@ -9,7 +9,7 @@ class ProductsPaging
 {
     private const NB_PRODUCTS_PAGED = 4;
 
-    private $repository;
+    private $productRepository;
     private $nbProducts;
     private $maxPages;
 

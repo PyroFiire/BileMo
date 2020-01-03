@@ -75,6 +75,6 @@ class DeletePersonController
         $this->manager->remove($person);
         $this->manager->flush();
 
-        return $this->responder->send($request, $datas = [], 204);
+        return $this->responder->send($request, [], 204);
     }
 }

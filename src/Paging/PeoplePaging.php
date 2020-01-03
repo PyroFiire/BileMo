@@ -22,8 +22,8 @@ class PeoplePaging
         $this->repository = $repository;
         $this->security = $security;
         $this->idUserClient = $this->security->getUser()->getId();
-        $this->nbpeople = $this->repository->count(['userClient' => $this->idUserClient]);
-        $this->maxPages = intval(ceil($this->nbpeople / self::NB_PEOPLE_PAGED));
+        $this->nbPeople = $this->repository->count(['userClient' => $this->idUserClient]);
+        $this->maxPages = intval(ceil($this->nbPeople / self::NB_PEOPLE_PAGED));
     }
 
     public function getDatas($page)

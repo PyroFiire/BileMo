@@ -13,7 +13,8 @@ use Nelmio\ApiDocBundle\Annotation\Security as SecurityDoc;
 class ListOfProductsController
 {
     private $responder;
-    private $productRepository;
+    private $paging;
+    private $links;
 
     public function __construct(
         JsonResponder $responder,

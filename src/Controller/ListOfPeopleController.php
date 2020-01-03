@@ -14,8 +14,9 @@ use Nelmio\ApiDocBundle\Annotation\Security as SecurityDoc;
 class ListOfPeopleController
 {
     private $responder;
-    private $personRepository;
+    private $paging;
     private $personDTO;
+    private $links;
 
     public function __construct(
         JsonResponder $responder,

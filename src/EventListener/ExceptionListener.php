@@ -28,7 +28,7 @@ class ExceptionListener
                      'message' => $exception->getMessage(),
         ];
         $serialiseResponse = $this->serializer->serialize($response, 'json');
-        $jsonResponse = new JsonResponse($serialiseResponse, $exception->getCode(), $headers = [], true);
+        $jsonResponse = new JsonResponse($serialiseResponse, $exception->getCode(), [], true);
         $event->setResponse($jsonResponse);
     }
 }

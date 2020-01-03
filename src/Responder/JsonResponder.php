@@ -9,7 +9,6 @@ use Symfony\Component\Serializer\SerializerInterface;
 class JsonResponder
 {
     private $serializer;
-    private $links;
 
     public function __construct(
         SerializerInterface $serializer

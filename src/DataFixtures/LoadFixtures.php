@@ -64,7 +64,7 @@ class LoadFixtures extends Fixture implements FixtureGroupInterface
                     ->setModel($brand.$faker->numberBetween(0, 10))
                     ->setReleaseYear($faker->numberBetween(2015, 2019))
                     ->setColor($faker->randomElement($colors))
-                    ->setScreenSize($faker->randomFloat($nbMaxDecimals = 2, $min = 4, $max = 8))
+                    ->setScreenSize($faker->randomFloat(2, 4, 8))
                     ->setStorageGB($faker->randomElement($storageGB))
                     ->setMemoryGB($faker->randomElement($memoryGB))
                     ->setMegapixels($faker->numberBetween(6, 20))
