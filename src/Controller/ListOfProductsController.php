@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use App\Paging\ProductsPaging;
-use Swagger\Annotations as SWG;
-use App\Responder\JsonResponder;
 use App\Links\LinksProductGenerator;
+use App\Paging\ProductsPaging;
+use App\Responder\JsonResponder;
+use Nelmio\ApiDocBundle\Annotation\Security as SecurityDoc;
+use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Nelmio\ApiDocBundle\Annotation\Security as SecurityDoc;
 
 class ListOfProductsController
 {
@@ -51,6 +51,7 @@ class ListOfProductsController
         $products = $this->paging->getDatas($request->query->get('page'));
 
         $this->links->addLinks($products);
+
         return $this->responder->send($request, $products);
     }
 }

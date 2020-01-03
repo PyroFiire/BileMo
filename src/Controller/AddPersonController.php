@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\DTO\PersonDTO;
 use App\Entity\Person;
+use App\Links\LinksPersonDTOGenerator;
 use App\Responder\JsonResponder;
 use App\Security\ErrorsValidator;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -14,7 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use App\Links\LinksPersonDTOGenerator;
 
 class AddPersonController
 {

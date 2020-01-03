@@ -3,16 +3,16 @@
 namespace App\Controller;
 
 use App\DTO\PersonDTO;
-use Swagger\Annotations as SWG;
 use App\Exceptions\ApiException;
+use App\Links\LinksPersonDTOGenerator;
+use App\Repository\PersonRepository;
 use App\Responder\JsonResponder;
 use App\Security\Voter\PersonVoter;
-use App\Repository\PersonRepository;
-use App\Links\LinksPersonDTOGenerator;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Routing\Annotation\Route;
 use Nelmio\ApiDocBundle\Annotation\Security as SecurityDoc;
+use Swagger\Annotations as SWG;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class DetailsPersonController
 {

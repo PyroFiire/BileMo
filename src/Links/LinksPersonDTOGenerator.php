@@ -2,8 +2,6 @@
 
 namespace App\Links;
 
-use App\Links\LinksGenerator;
-
 class LinksPersonDTOGenerator extends LinksGenerator
 {
     protected function createLinks(object $object)

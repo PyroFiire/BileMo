@@ -2,14 +2,14 @@
 
 namespace App\Controller;
 
-use Swagger\Annotations as SWG;
 use App\Exceptions\ApiException;
-use App\Responder\JsonResponder;
 use App\Links\LinksProductGenerator;
 use App\Repository\ProductRepository;
+use App\Responder\JsonResponder;
+use Nelmio\ApiDocBundle\Annotation\Security as SecurityDoc;
+use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Nelmio\ApiDocBundle\Annotation\Security as SecurityDoc;
 
 class DetailsProductController
 {
@@ -55,6 +55,7 @@ class DetailsProductController
         }
 
         $this->links->addLinks($product);
+
         return $this->responder->send($request, $product);
     }
 }

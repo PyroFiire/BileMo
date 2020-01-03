@@ -1,7 +1,7 @@
 <?php
 
-use App\Kernel;
 use App\CacheKernel;
+use App\Kernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
