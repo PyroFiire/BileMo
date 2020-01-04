@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\Security;
 
 class PeoplePaging
 {
-    private const NB_PEOPLE_PAGED = 2;
+    private const NB_PEOPLE_PAGED = 4;
     private $repository;
     private $security;
     private $nbPeople;

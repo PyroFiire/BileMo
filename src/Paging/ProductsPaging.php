@@ -7,7 +7,7 @@ use App\Repository\ProductRepository;
 
 class ProductsPaging
 {
-    private const NB_PRODUCTS_PAGED = 4;
+    private const NB_PRODUCTS_PAGED = 5;
 
     private $productRepository;
     private $nbProducts;
