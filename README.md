@@ -1,21 +1,21 @@
 BileMo
 =====================
 
-Projet 7 du parcours PHP / Symfony sur OpenClassrooms - Créez un web service exposant une API
+Project 7 of the PHP / Symfony course on OpenClassrooms - Create a web service exposing an API
 
 INSTRUCTION
 -----------
 
 GIT AND COMPOSER
 --------------------
-use "git clone https://github.com/PyroFiire/BileMo.git" in a folder in your server or local for download the project.
-use "cd SnowTricks" for go in the project
-use "composer install" for install dependancy
+use "git clone https://github.com/PyroFiire/BileMo.git" in a folder in your server or in local for download the project.
+use "cd BileMo" for go in the folder of project
+use "composer install" for install the dependancies
 
 CONFIG.PHP
 ----------
 
-Copie the file .env by .env.local and define your connection to the database (line 28)
+Copy the file .env by .env.local and define your connection to the database (line 28)
 
 Change APP_ENV=dev line 17 for APP_ENV=prod (line 17)
 
